@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM ubuntu:18.04
 
 MAINTAINER dorukozturk <dorukozturk@kitware.com>
 
@@ -12,7 +12,7 @@ RUN apt-get -y update -qq && \
     apt-get install -y build-essential cmake g++ libboost-dev libboost-system-dev \
     libboost-filesystem-dev libexpat1-dev zlib1g-dev libxml2-dev\
     libbz2-dev libpq-dev libgeos-dev libgeos++-dev libproj-dev \
-    postgresql-server-dev-9.5 postgresql-9.5-postgis-2.2 postgresql-contrib-9.5 \
+    postgresql-server-dev-10 postgresql-10-postgis-2.4 postgresql-contrib-10 \
     apache2 php php-pgsql libapache2-mod-php php-pear php-db \
     php-intl git curl sudo \
     python-pip libboost-python-dev \
@@ -24,8 +24,8 @@ RUN apt-get -y update -qq && \
 WORKDIR /app
 
 # Configure postgres
-RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/9.5/main/pg_hba.conf && \
-    echo "listen_addresses='*'" >> /etc/postgresql/9.5/main/postgresql.conf
+RUN echo "host all  all    0.0.0.0/0  trust" >> /etc/postgresql/10/main/pg_hba.conf && \
+    echo "listen_addresses='*'" >> /etc/postgresql/10/main/postgresql.conf
 
 # Nominatim install
 ENV NOMINATIM_VERSION v3.1.0
@@ -50,5 +50,3 @@ COPY start.sh /app/start.sh
 COPY startapache.sh /app/startapache.sh
 COPY startpostgres.sh /app/startpostgres.sh
 COPY init.sh /app/init.sh
-
-
